@@ -9,4 +9,7 @@ class Categoria extends Model
     protected $table = 'categorias';
     protected $fillable = ['nome', 'codigo_classificação'];
     
+    public function livros(){
+        return $this->hasMany(Livro::class);
+    }
 }
