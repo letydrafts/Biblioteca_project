@@ -21,4 +21,7 @@ class Autor extends Model
         return $this->hasMany(Exemplar::class);
     }
 
+     public function  livros(){
+        return $this->BelongsToMany(Livro::class);
+    }
 }
