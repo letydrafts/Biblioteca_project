@@ -18,7 +18,7 @@ class Livro extends Model
     }
 
     public function exemplares(){
-        return $this->hasMany(Exemplares::class);
+        return $this->hasMany(Exemplar::class);
     }
 
     public function autores(){

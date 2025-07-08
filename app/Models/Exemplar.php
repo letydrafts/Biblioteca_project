@@ -10,15 +10,15 @@ class Exemplar extends Model
     protected $fillable = ['codigo', 'status', 'livro_id'];
 
      public function livro(){
-        return $this->belongsTo(Livros::class);
+        return $this->belongsTo(Livro::class);
     }
 
     public function emprestimos(){
-        return $this->hasMany(Emprestimos::class);
+        return $this->hasMany(Emprestimo::class);
     }
 
     public function reservas(){
-        return $this->hasMany(Reservas::class);
+        return $this->hasMany(Reserva::class);
     }
 }
 
