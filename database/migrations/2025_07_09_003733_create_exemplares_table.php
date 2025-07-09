@@ -16,7 +16,7 @@ return new class extends Migration
             $table->integer('codigo');
             $table->string('status');
             $table->softDeletes();
-            $table->foreignForId(Livro::class)->contrained()->onDelete('cascade');
+            $table->fforeignIdFor(Livro::class)->contrained()->onDelete('cascade');
             $table->timestamps();
         });
     }

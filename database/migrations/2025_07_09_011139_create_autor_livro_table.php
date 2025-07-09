@@ -11,13 +11,11 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('reservas', function (Blueprint $table) {
+        Schema::create('autor_livro', function (Blueprint $table) {
             $table->id()->autoIncrement();
-            $table->date('data_reserva');
-            $table->string('status');
-            $table->foreignIdFor(User::class)->constrained()->onDelete('cascade');
-            $table->foreignIdFor(Exemplar::class)->constrained()->onDelete('cascade');
-            $table->softDeletes();
+            $table->foreignIdFor(Autor::class)->constrained()->onDelete();
+            $table->foreignIdFor(Livro::class)->constrained()->onDelete();
+            $table->primary(['autor_id', 'livro_id']);
             $table->timestamps();
         });
     }
@@ -27,6 +25,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('reservas');
+        Schema::dropIfExists('autor_livro');
     }
 };

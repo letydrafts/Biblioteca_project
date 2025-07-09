@@ -15,8 +15,8 @@ return new class extends Migration
             $table->id()->autoIncrement();
             $table->date('data_empréstimo');
             $table->date('data_devolucao');
-            $table->foreignForId(User::class)->constrained()->onDelete('cascade');
-            $table->foreignForId(Exemplar::class)->constrained()->onDelete('cascade');
+            $table->foreignIdFor(User::class)->constrained()->onDelete('cascade');
+            $table->foreignIdFor(Exemplar::class)->constrained()->onDelete('cascade');
             $table->softDeletes();
             $table->timestamps();
         });
