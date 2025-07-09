@@ -12,9 +12,51 @@
 
                 <!-- Navigation Links -->
                 <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
-                    <x-nav-link :href="route('dashboard')" :active="request()->routeIs('dashboard')">
-                        {{ __('Dashboard') }}
+        <x-nav-link :href="route('reservas.index')" :active="request()->routeIs('reservas.index')">
+            {{ __('Reservas') }}
+        </x-nav-link>
+
+        <x-nav-link :href="route('emprestimos.index')" :active="request()->routeIs('emprestimos.index')">
+            {{ __('Empréstimos') }}
+        </x-nav-link>
+
+        <x-nav-link :href="route('livros.index')" :active="request()->routeIs('livros.index')">
+            {{ __('Livros') }}
+        </x-nav-link>
+
+        <x-nav-link :href="route('multas.usuarias')" :active="request()->routeIs('multas.usuarias')">
+            {{ __('Minhas Multas') }}
+        </x-nav-link>
+
+        @if(auth()->user()->hasRole('admin'))
+            <x-nav-link :href="route('categorias.index')" :active="request()->routeIs('categorias.index')">
+                {{ __('Categorias') }}
+            </x-nav-link>
+
+            <x-nav-link :href="route('autores.index')" :active="request()->routeIs('autores.index')">
+                {{ __('Autores') }}
+            </x-nav-link>
+
+            <x-nav-link :href="route('editoras.index')" :active="request()->routeIs('editoras.index')">
+                {{ __('Editoras') }}
+            </x-nav-link>
+
+            <x-nav-link :href="route('exemplares.index')" :active="request()->routeIs('exemplares.index')">
+                {{ __('Exemplares') }}
+            </x-nav-link>
+
+            <x-nav-link :href="route('reservas.index')" :active="request()->routeIs('reservas.index')">
+                {{ __('Reservas (Admin)') }}
+            </x-nav-link>
+
+            <x-nav-link :href="route('emprestimos.index')" :active="request()->routeIs('emprestimos.index')">
+                {{ __('Empréstimos (Admin)') }}
+            </x-nav-link>
+
+            <x-nav-link :href="route('multas.index')" :active="request()->routeIs('multas.index')">
+                {{ __('Multas') }}
                     </x-nav-link>
+            @endif
                 </div>
             </div>
 

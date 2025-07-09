@@ -16,7 +16,7 @@ return new class extends Migration
         Schema::create('livros', function (Blueprint $table) {
             $table->id()->autoIncrement();
             $table->string('nome');
-            $table->integer('isbn');
+            $table->biginteger('isbn');
             $table->ForeignIdFor(Editora::class)->constrained()->onDelete('cascade');
             $table->ForeignIdFor(Categoria::class)->constrained()->onDelete('cascade');
             $table->softDeletes();
