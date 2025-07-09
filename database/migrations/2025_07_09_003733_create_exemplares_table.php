@@ -1,5 +1,6 @@
 <?php
 
+use App\Models\Livros;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
@@ -16,7 +17,7 @@ return new class extends Migration
             $table->integer('codigo');
             $table->string('status');
             $table->softDeletes();
-            $table->fforeignIdFor(Livro::class)->contrained()->onDelete('cascade');
+            $table->foreignIdFor(Livro::class)->contrained()->onDelete('cascade');
             $table->timestamps();
         });
     }
