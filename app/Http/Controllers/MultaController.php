@@ -74,5 +74,11 @@ class MultaController extends Controller
         $multa->delete();
         return redirect()->route('multas.index')->with('success', 'Multa excluída com sucesso!');
     }
+
+    public function minhasMultas()
+{
+    $multas = Multa::where('user_id', Auth::id())->with('emprestimo')->get();
+    return view('multas.usuario', compact('multas'));
+}
 }
 

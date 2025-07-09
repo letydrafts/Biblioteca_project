@@ -2,6 +2,15 @@
 
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers,
+    CategoriaController,
+    AutorController,
+    EditoraController,
+    LivroController,
+    ExemplarController,
+    ReservaController,
+    EmprestimoController,
+    MultaController;
 
 Route::get('/', function () {
     return view('welcome');
