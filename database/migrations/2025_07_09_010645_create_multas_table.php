@@ -18,8 +18,8 @@ return new class extends Migration
             $table->integer('dias_multa');
             $table->string('motivo');
             $table->string('status');
-            $table->foreignForId(Emprestimo::class)->constrained()->onDelete();
-            $table->foreignForId(User::class)->constrained()->onDelete();
+            $table->foreignIdFor(Emprestimo::class)->constrained()->onDelete('cascade');
+            $table->foreignIdFor(User::class)->constrained()->onDelete('cascade');
             $table->softDeletes();
             $table->timestamps();
         });
