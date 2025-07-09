@@ -11,12 +11,13 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('categorias', function (Blueprint $table) {
-            $table->id()->autoIncrement();
-            $table->string('nome');
-            $table->integer('codigo_classificacao');
-            $table->timestamps();
+        Schema::create('exemplares', function (Blueprint $table) {
+            $table->id()-autoIncrement();
+            $table->integer('codigo');
+            $table->string('status');
             $table->softDeletes();
+            $table->foreignForId(Livro::class)->contrained()->onDelete('cascade');
+            $table->timestamps();
         });
     }
 
@@ -25,6 +26,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('categorias');
+        Schema::dropIfExists('exemplares');
     }
 };
