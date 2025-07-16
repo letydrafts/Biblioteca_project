@@ -24,11 +24,10 @@ Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
-    Route::resource('reservas', ReservaController::class)->only(['index', 'create', 'store']);
     Route::resource('emprestimos', EmprestimoController::class)->only(['index']);
+    Route::resource('reservas', ReservaController::class)->only(['index', 'create', 'store']);
     Route::resource('livros', LivroController::class)->only(['index', 'show']);
     Route::get('minhas-multas', [MultaController::class, 'minhasMultas'])->name('multas.usuarias');
-
 });
 
 Route::middleware(['auth', 'role:admin'])->group(function () {

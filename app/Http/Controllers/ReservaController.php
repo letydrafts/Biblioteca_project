@@ -24,6 +24,21 @@ class ReservaController extends Controller
         return view('reservas.create', compact('usuarios', 'exemplares'));
     }
 
+    public function solicitarReserva(Request $request)
+{
+    $request->validate([
+        'livro_id' => 'required|exists:livros,id',
+    ]);
+
+    Reserva::create([
+        'user_id' => auth()->id(),
+        'livro_id' => $request->livro_id,
+        'status' => 'pendente',
+        'data_reserva' => now(),
+    ]);
+
+    return redirect()->route('livros.index')->with('success', 'Reserva solicitada com sucesso!');
+}
 
     public function store(Request $request)
     {
