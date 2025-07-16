@@ -12,7 +12,7 @@ class MultaController extends Controller
 
     public function index()
     {
-        $multas = Multa::with(['user', 'emprestimo'])->get();
+        $multas = Multa::with(['user', 'emprestimo'])->paginate(10);
         return view('multas.index', compact('multas'));
     }
 

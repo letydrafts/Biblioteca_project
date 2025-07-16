@@ -3,6 +3,7 @@
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\CategoriaController;
+use App\Http\Middleware\isAdmin;
 use App\Http\Controllers\AutorController;
 use App\Http\Controllers\EditoraController;
 use App\Http\Controllers\LivroController;
@@ -30,13 +31,13 @@ Route::middleware('auth')->group(function () {
     Route::get('minhas-multas', [MultaController::class, 'minhasMultas'])->name('multas.usuarias');
 });
 
-Route::middleware(['auth', 'role:admin'])->group(function () {
+Route::middleware(['auth', isAdmin::class])->group(function () {
     Route::resource('categorias', CategoriaController::class);
     Route::resource('autores', AutorController::class);
     Route::resource('editoras', EditoraController::class);
     Route::resource('livros', LivroController::class)->except(['index', 'show']);
     Route::resource('exemplares', ExemplarController::class);
-     Route::resource('reservas', ReservaController::class)->only(['index', 'show']);
+    Route::resource('reservas', ReservaController::class)->except(['create', 'show', 'store']);
     Route::resource('emprestimos', EmprestimoController::class)->except(['index']);
     Route::resource('multas', MultaController::class)->except(['show']);
 });

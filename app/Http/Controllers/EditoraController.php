@@ -10,7 +10,7 @@ class EditoraController extends Controller
 
     public function index()
     {
-        $editoras = Editora::all();
+        $editoras = Editora::paginate(10);
         return view('editoras.index', compact('editoras'));
     }
 

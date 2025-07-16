@@ -11,7 +11,7 @@ class ExemplarController extends Controller
 
     public function index()
     {
-        $exemplares = Exemplar::with('livro')->get();
+        $exemplares = Exemplar::with('livro')->paginate(10);
         return view('exemplares.index', compact('exemplares'));
     }
 
