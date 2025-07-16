@@ -18,10 +18,14 @@ class ReservaController extends Controller
 
     public function create()
     {
-        $usuarios = User::all();
-        $exemplares = Exemplar::all();
 
-        return view('reservas.create', compact('usuarios', 'exemplares'));
+        abort_unless(auth()->user()->hasRole('admin'), 403);
+
+
+        $usuarios = User::all();
+        $exemplares = Livro::all();
+
+        return view('reservas.create', compact('usuarios', 'livros'));
     }
 
     public function solicitarReserva(Request $request)
@@ -40,18 +44,25 @@ class ReservaController extends Controller
     return redirect()->route('livros.index')->with('success', 'Reserva solicitada com sucesso!');
 }
 
-    public function store(Request $request)
-    {
-        $request->validate([
-            'data_reserva' => 'required|date',
-            'status' => 'required|string|max:50',
-            'user_id' => 'required|exists:users,id',
-            'exemplar_id' => 'required|exists:exemplares,id',
-        ]);
+        public function store(Request $request)
+{
+    $request->validate([
+        'data_reserva' => 'required|date',
+        'status' => 'required|string|max:50',
+        'user_id' => 'required|exists:users,id',
+        'livro_id' => 'required|exists:livros,id',
 
-        Reserva::create($request->all());
+    ]);
 
-        return redirect()->route('reservas.index')->with('success', 'Reserva criada com sucesso!');
+    Reserva::create([
+        'data_reserva' => $request->data_reserva,
+        'status' => $request->status,
+        'user_id' => $request->user_id,
+        'livro_id' => $request->livro_id,
+        'exemplar_id' => null,
+    ]);
+
+    return redirect()->route('reservas.index')->with('success', 'Reserva criada com sucesso!');
     }
 
 
@@ -65,24 +76,26 @@ class ReservaController extends Controller
     {
         $usuarios = User::all();
         $exemplares = Exemplar::all();
+        $livros = Livro::all();
 
         return view('reservas.edit', compact('reserva', 'usuarios', 'exemplares'));
     }
 
 
     public function update(Request $request, Reserva $reserva)
-    {
-        $request->validate([
-            'data_reserva' => 'required|date',
-            'status' => 'required|string|max:50',
-            'user_id' => 'required|exists:users,id',
-            'exemplar_id' => 'required|exists:exemplares,id',
-        ]);
+{
+    $request->validate([
+        'data_reserva' => 'required|date',
+        'status' => 'required|string|max:50',
+        'user_id' => 'required|exists:users,id',
+        'livro_id' => 'required|exists:livros,id',
+        'exemplar_id' => 'required|exists:exemplares,id', 
+    ]);
 
-        $reserva->update($request->all());
+    $reserva->update($request->all());
 
-        return redirect()->route('reservas.index')->with('success', 'Reserva atualizada com sucesso!');
-    }
+    return redirect()->route('reservas.index')->with('success', 'Reserva atualizada com sucesso!');
+}
 
 
     public function destroy(Reserva $reserva)
