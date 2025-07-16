@@ -3,9 +3,9 @@
 namespace Database\Seeders;
 
 use App\Models\User;
-// use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 use Spatie\Permission\Models\Role;
+use Illuminate\Support\Facades\Hash;
 
 class DatabaseSeeder extends Seeder
 {
@@ -14,17 +14,51 @@ class DatabaseSeeder extends Seeder
      */
     public function run(): void
     {
-        // User::factory(10)->create();
-         Role::firstOrCreate(['name' => 'admin']);
 
-        $user = User::factory()->create([
+        Role::firstOrCreate(['name' => 'admin']);
+        Role::firstOrCreate(['name' => 'user']);
+
+
+        $admin = User::factory()->create([
             'name' => 'Admin Biblioteca',
             'cpf' => '12345678901',
             'email' => 'adm@gmail.com',
             'password' => bcrypt('adminbiblio'),
         ]);
+        $admin->assignRole('admin');
 
-         $user->assignRole('admin');
+        $usuarios = [
+            [
+                'name' => 'João Silva',
+                'cpf' => '11122233344',
+                'email' => 'joao@gmail.com',
+            ],
+            [
+                'name' => 'Maria Oliveira',
+                'cpf' => '22233344455',
+                'email' => 'maria@gmail.com',
+            ],
+            [
+                'name' => 'Lucas Costa',
+                'cpf' => '33344455566',
+                'email' => 'lucas@gmail.com',
+            ],
+            [
+                'name' => 'Ana Souza',
+                'cpf' => '44455566677',
+                'email' => 'ana@gmail.com',
+            ],
+        ];
+
+        foreach ($usuarios as $data) {
+            $user = User::create([
+                'name' => $data['name'],
+                'cpf' => $data['cpf'],
+                'email' => $data['email'],
+                'password' => Hash::make('12345678'),
+            ]);
+            $user->assignRole('user');
+        }
     }
-
 }
+

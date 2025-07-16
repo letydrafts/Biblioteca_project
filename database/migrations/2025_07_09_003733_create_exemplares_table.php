@@ -15,7 +15,6 @@ return new class extends Migration
         Schema::create('exemplares', function (Blueprint $table) {
             $table->id()->autoIncrement();
             $table->integer('codigo');
-            $table->string('status');
             $table->softDeletes();
             $table->foreignIdFor(Livro::class)->constrained()->onDelete('cascade');
             $table->timestamps();

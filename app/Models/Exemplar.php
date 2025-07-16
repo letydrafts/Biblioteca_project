@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 class Exemplar extends Model
 {
     protected $table = 'exemplares';
-    protected $fillable = ['codigo', 'status', 'livro_id'];
+    protected $fillable = ['codigo', 'livro_id'];
 
      public function livro(){
         return $this->belongsTo(Livro::class);
@@ -20,5 +20,13 @@ class Exemplar extends Model
     public function reservas(){
         return $this->hasMany(Reserva::class);
     }
+    
+    public function getStatusAttribute()
+{
+    $emprestimoAtivo = $this->emprestimos()->whereNull('data_devolucao')->first();
+
+    return $emprestimoAtivo ? 'Indisponível' : 'Disponível';
+}
+
 }
 

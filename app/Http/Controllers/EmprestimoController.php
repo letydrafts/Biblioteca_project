@@ -11,11 +11,20 @@ class EmprestimoController extends Controller
 {
 
     public function index()
-    {
-        $emprestimos = Emprestimo::with(['user', 'exemplar'])->get();
-        return view('emprestimos.index', compact('emprestimos'));
+{
+    if (auth()->user()->hasRole('admin')) {
+
+        $emprestimos = Emprestimo::with(['user', 'exemplar.livro'])->paginate(10);
+    } else {
+
+        $emprestimos = Emprestimo::with(['exemplar.livro'])
+            ->where('user_id', auth()->id())
+            ->whereNull('data_devolucao')
+            ->paginate(10);
     }
 
+    return view('emprestimos.index', compact('emprestimos'));
+}
 
     public function create()
     {

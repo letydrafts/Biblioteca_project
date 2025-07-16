@@ -5,16 +5,26 @@ namespace App\Http\Controllers;
 use App\Models\Reserva;
 use App\Models\User;
 use App\Models\Exemplar;
+use App\Models\Livro;
 use Illuminate\Http\Request;
 
 class ReservaController extends Controller
 {
 
     public function index()
-    {
-        $reservas = Reserva::with(['user', 'exemplar'])->get();
-        return view('reservas.index', compact('reservas'));
-    }
+{
+
+    $reservas = Reserva::where('user_id', auth()->id())->paginate(10);
+    return view('reservas.index', compact('reservas'));
+}
+
+public function adminIndex()
+{
+
+    $reservas = Reserva::with('user', 'exemplar.livro')->paginate(10);
+    return view('reservas.index', compact('reservas'));
+}
+
 
     public function create()
     {
@@ -23,7 +33,8 @@ class ReservaController extends Controller
 
 
         $usuarios = User::all();
-        $exemplares = Livro::all();
+        $exemplares = Exemplar::all();
+        $livros = Livro::all();
 
         return view('reservas.create', compact('usuarios', 'livros'));
     }
@@ -67,9 +78,13 @@ class ReservaController extends Controller
 
 
     public function show(Reserva $reserva)
-    {
-        return view('reservas.show', compact('reserva'));
+{
+    if (!auth()->user()->hasRole('admin') && $reserva->user_id !== auth()->id()) {
+        abort(403);
     }
+
+    return view('reservas.show', compact('reserva'));
+}
 
 
     public function edit(Reserva $reserva)
